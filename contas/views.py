@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from datetime import datetime
 
+
 def definir_contas(request):
     if request.method == "GET":
         categorias = Categoria.objects.all()
@@ -28,7 +29,8 @@ def definir_contas(request):
         
         messages.add_message(request, constants.SUCCESS, 'Conta cadastrada com sucesso')
         return redirect('/contas/definir_contas')
-        
+
+
 def ver_contas(request):
     MES_ATUAL = datetime.now().month
     DIA_ATUAL = datetime.now().day
@@ -43,4 +45,8 @@ def ver_contas(request):
     
     restantes = contas.exclude(id__in=contas_vencidas).exclude(id__in=contas_pagas).exclude(id__in=contas_proximas_vencimento)
 
-    return render(request, 'ver_contas.html', {'contas_vencidas': contas_vencidas, 'contas_proximas_vencimento': contas_proximas_vencimento, 'restantes': restantes})    
+    return render(request, 'ver_contas.html', {'contas_vencidas': contas_vencidas, 'contas_proximas_vencimento': contas_proximas_vencimento, 'restantes': restantes})
+
+
+def pagar_conta(request):
+    ...

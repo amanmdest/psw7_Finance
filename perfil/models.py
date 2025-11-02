@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 
+
 class Categoria(models.Model):
     categoria = models.CharField(max_length=50)
     essencial = models.BooleanField(default=False)
@@ -23,6 +24,8 @@ class Categoria(models.Model):
             return int((self.total_gasto() * 100) / self.valor_planejamento)
         except:
             return 0
+        
+
 class Conta(models.Model):
     banco_choices = (
         ('NU', 'Nubank'),
@@ -39,8 +42,8 @@ class Conta(models.Model):
     apelido = models.CharField(max_length=50)
     banco = models.CharField(max_length=3, choices=banco_choices)
     tipo = models.CharField(max_length=2, choices=tipo_choices)
-    valor = models.FloatField()
+    extrato = models.FloatField()
     icone = models.ImageField(upload_to="icones")
 
     def __str__(self):
-        return self.apelido 
+        return self.apelido

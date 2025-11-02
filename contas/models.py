@@ -8,9 +8,17 @@ class ContaPagar(models.Model):
     valor = models.FloatField()
     dia_pagamento = models.IntegerField()
     
+    class Meta:
+        verbose_name = 'ContaPaga'
+        verbose_name_plural = 'ContasPagar'
+
     def __str__(self):
         return self.titulo
 
 class ContaPaga(models.Model):
     conta = models.ForeignKey(ContaPagar, on_delete=models.DO_NOTHING)
     data_pagamento = models.DateField()
+
+    class Meta:
+        verbose_name = 'ContaPaga'
+        verbose_name_plural = 'ContasPagas'

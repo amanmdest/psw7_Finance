@@ -1,4 +1,4 @@
-from extrato.models import Valores
+from extrato.models import Valor
 from datetime import datetime
 
 def calcula_total(obj, campo):
@@ -9,11 +9,11 @@ def calcula_total(obj, campo):
     return total
 
 def calcula_equilibrio_financeiro():
-    gastos_essenciais = Valores.objects.filter(data__month=datetime.now().month).filter(tipo='S').filter(categoria__essencial=True)
-    gastos_nao_essenciais = Valores.objects.filter(data__month=datetime.now().month).filter(tipo='S').filter(categoria__essencial=False)
+    gastos_essenciais = Valor.objects.filter(data__month=datetime.now().month).filter(tipo='S').filter(categoria__essencial=True)
+    gastos_nao_essenciais = Valor.objects.filter(data__month=datetime.now().month).filter(tipo='S').filter(categoria__essencial=False)
 
-    total_gastos_essenciais = calcula_total(gastos_essenciais, 'valor')
-    total_gastos_nao_essenciais = calcula_total(gastos_nao_essenciais, 'valor')
+    total_gastos_essenciais = calcula_total(gastos_essenciais, 'extrato')
+    total_gastos_nao_essenciais = calcula_total(gastos_nao_essenciais, 'extrato')
 
     total = total_gastos_essenciais + total_gastos_nao_essenciais
 

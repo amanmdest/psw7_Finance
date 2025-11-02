@@ -1,7 +1,7 @@
 from django.db import models
 from perfil.models import Conta, Categoria
 
-class Valores(models.Model):
+class Valor(models.Model):
     choice_tipo = (
         ('E', 'Entrada'),
         ('S', 'Saída')
@@ -13,6 +13,10 @@ class Valores(models.Model):
     data = models.DateField()
     conta = models.ForeignKey(Conta, on_delete= models.DO_NOTHING)
     tipo = models.CharField(max_length=1, choices=choice_tipo)
+
+    class Meta:
+        verbose_name = 'Valor'
+        verbose_name_plural = 'Valores'
 
     def __str__(self):
         return self.descricao

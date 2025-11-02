@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Valores
+from .models import Valor
 
-admin.site.register(Valores)
+admin.site.register(Valor)

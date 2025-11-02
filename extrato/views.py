@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, FileResponse
 from perfil.models import Conta, Categoria 
-from .models import Valores
+from .models import Valor
 from django.contrib import messages
 from django.contrib.messages import constants 
 from datetime import datetime
@@ -24,7 +24,7 @@ def novo_valor(request):
         conta = request.POST.get('conta')
         tipo = request.POST.get('tipo')
 
-        valores = Valores(
+        valores = Valor(
             valor=valor,
             categoria_id=categoria,
             descricao=descricao,
@@ -53,7 +53,7 @@ def view_extrato(request):
     categorias = Categoria.objects.all()
     conta_get = request.GET.get('conta')
     categoria_get = request.GET.get('categoria')
-    valores = Valores.objects.filter(data__month=datetime.now().month)
+    valores = Valor.objects.filter(data__month=datetime.now().month)
   
     if conta_get:
         valores = valores.filter(conta__id=conta_get)
@@ -63,7 +63,7 @@ def view_extrato(request):
     return render (request, 'view_extrato.html', {'valores':valores, 'contas':contas, 'categorias':categorias}) 
 
 def exportar_pdf(request):
-    valores = Valores.objects.filter(data__month=datetime.now().month)
+    valores = Valor.objects.filter(data__month=datetime.now().month)
     contas = Conta.objects.all()
     categorias = Categoria.objects.all()
     
