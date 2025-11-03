@@ -11,6 +11,7 @@ from weasyprint import HTML
 from io import BytesIO
 import os
 
+
 def novo_valor(request):
     if request.method == 'GET':
         contas = Conta.objects.all
@@ -24,7 +25,7 @@ def novo_valor(request):
         conta = request.POST.get('conta')
         tipo = request.POST.get('tipo')
 
-        valores = Valor(
+        novo_valor = Valor(
             valor=valor,
             categoria_id=categoria,
             descricao=descricao,
@@ -33,20 +34,21 @@ def novo_valor(request):
             tipo=tipo,
         )
 
-        valores.save()
+        novo_valor.save()
 
         conta = Conta.objects.get(id=conta)
 
         if tipo == 'E':
-            conta.valor += int(valor)
+            conta.extrato += int(valor)
             messages.add_message(request, constants.SUCCESS, 'Entrada registrada com sucesso')
 
         else:
-            conta.valor -= int(valor)
+            conta.extrato -= int(valor)
             messages.add_message(request, constants.SUCCESS, 'Saída foi registrada com sucesso')    
         conta.save()
 
         return redirect('/extrato/novo_valor')
+
 
 def view_extrato(request):
     contas = Conta.objects.all() 
@@ -60,7 +62,10 @@ def view_extrato(request):
     if categoria_get:
         valores = valores.filter(categoria__id=categoria_get)    
 
-    return render (request, 'view_extrato.html', {'valores':valores, 'contas':contas, 'categorias':categorias}) 
+    return render (
+        request, 'view_extrato.html', {'valores':valores, 'contas':contas, 'categorias':categorias}
+        ) 
+
 
 def exportar_pdf(request):
     valores = Valor.objects.filter(data__month=datetime.now().month)

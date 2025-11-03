@@ -11,8 +11,8 @@ class Categoria(models.Model):
         return self.categoria
     
     def total_gasto(self):
-        from extrato.models import Valores
-        valores = Valores.objects.filter(categoria__id = self.id).filter(data__month=datetime.now().month).filter(tipo='S')
+        from extrato.models import Valor
+        valores = Valor.objects.filter(categoria__id = self.id).filter(data__month=datetime.now().month).filter(tipo='S')
         total_valor = 0
         
         for valor in valores:
